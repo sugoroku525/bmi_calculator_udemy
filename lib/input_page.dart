@@ -18,28 +18,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  gendertype selectedGender;
 
-  Color maleCardColour = inactiveCardColour;
-  Color femaleCardColour = inactiveCardColour;
-  
-  void updateColour(gendertype selectedgender){
-    if (selectedgender ==gendertype.male){
-      if(maleCardColour ==inactiveCardColour){
-        maleCardColour = activeCardColour;
-        femaleCardColour = inactiveCardColour;
-      }else{
-        maleCardColour = inactiveCardColour;
-      }
-    }
-     if (selectedgender ==gendertype.female){
-      if(femaleCardColour ==inactiveCardColour){
-        femaleCardColour = activeCardColour;
-        maleCardColour = inactiveCardColour;
-      }else{
-        femaleCardColour = inactiveCardColour;
-      }
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,26 +32,26 @@ class _InputPageState extends State<InputPage> {
             Expanded(child:GestureDetector (
               onTap:(){
                 setState(() {
-                  updateColour(gendertype.male);
+                  selectedGender = gendertype.male;
                 });
               },
-              child: new ReusableCard(colour:maleCardColour,
+              child: new ReusableCard(colour:selectedGender  == gendertype.male ? activeCardColour : inactiveCardColour,
               cardChild:IconContent(icon: FontAwesomeIcons.mars, label:'MALE')),
             )),
             Expanded(child: GestureDetector(
               onTap: (){
                 setState(() {
-                  updateColour(gendertype.female);
+                  selectedGender = gendertype.female;
                 });
               },
-              child: ReusableCard(colour:inactiveCardColour
+              child: ReusableCard(colour:selectedGender == gendertype.female ? activeCardColour:inactiveCardColour
               ,cardChild:IconContent(icon: FontAwesomeIcons.venus, label:'FEMALE')),
             ),
             ),
           ],)),
           Expanded(child:ReusableCard(colour:activeCardColour),),
           Expanded(child:Row(children:<Widget> [
-            Expanded(child: ReusableCard(colour:femaleCardColour),),
+            Expanded(child: ReusableCard(colour:activeCardColour),),
             Expanded(child: ReusableCard(colour:activeCardColour),),
             Container(
               color:botomContainerColour,
